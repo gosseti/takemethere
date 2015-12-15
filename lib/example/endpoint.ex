@@ -35,5 +35,6 @@ defmodule Example.Endpoint do
     key: "_example_key",
     signing_salt: "cC57xx5H"
 
+  plug PlugCors
   plug Example.Router
 end

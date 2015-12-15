@@ -17,9 +17,13 @@ defmodule Example.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [mod: {Example, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger]]
+     applications: applications(Mix.env)]
   end
 
+  defp applications(:dev), do: applications(:all) ++ [:remix]
+  defp applications(_all) do
+    [:phoenix, :phoenix_html, :cowboy, :logger, :httpoison]
+  end
   # Specifies which paths to compile per environment
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
   defp elixirc_paths(_),     do: ["lib", "web"]
@@ -32,6 +36,9 @@ defmodule Example.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:rethinkdb, "~> 0.1.1"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:plug_cors, "~> 0.8.2"},
+     {:httpoison, "~> 0.8.0"},
+     {:remix, "~> 0.0.2", only: :dev}]
   end
 end

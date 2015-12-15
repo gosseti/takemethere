@@ -11,14 +11,14 @@ config :example, Example.Endpoint,
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,
-  check_origin: false,
-  watchers: []
+  check_origin: false
+  # watchers: [{Path.expand("webpack.devserver.js"), ["--watch", "--colors", "--progress"]}]
 
 # Watch static and templates for browser reloading.
 config :example, Example.Endpoint,
   live_reload: [
     patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      # ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{web/views/.*(ex)$},
       ~r{web/templates/.*(eex)$}
     ]

@@ -11,17 +11,18 @@ defmodule Example.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug PlugCors, [origins: ["localhost:4200"]]
   end
 
   scope "/", Example do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :api
 
     get "/", PageController, :index
-    get "/init-table", PageController, :init
+
+    resources "/search", SearchController, only: [:new]
+    resources "/photos", PhotoController
+
+    options "/photos*anything", PhotoController, :options
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Example do
-  #   pipe_through :api
-  # end
 end
