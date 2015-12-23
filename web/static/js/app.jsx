@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import {Session as RethinkSession} from 'react-rethinkdb'
 import {Home} from './Home'
 
+// create a new rethinkDB session
 const rethinkSession = new RethinkSession()
 rethinkSession.connect({
   host: 'localhost',

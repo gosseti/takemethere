@@ -6,8 +6,10 @@ import MapboxMap from './components/MapboxMap'
 
 export const Home = React.createClass({
 
+  // import the rethinkDB session as a mixin
   mixins: [RethinkMixin('rethinkSession')],
 
+  // observe the photos table and return any new ones that come in
   observe(props, state) {
     const query = r.table('photos')
     return {
@@ -16,10 +18,14 @@ export const Home = React.createClass({
   },
 
   render() {
+    // set up variables for both the photos and errors
     const errors = this.data.photos.errors()
     const photos = this.data.photos.value()
+    console.log(JSON.stringify(photos))
     return (
       <div className='container'>
+        {/* send the photos as props to the map component and render it
+            an example of the photos data can be found in data.json */}
         <MapboxMap
           errors={errors}
           photos={photos}
