@@ -77,6 +77,7 @@ module.exports = {
       { test: /\.js$/,              loaders: jsLoaders, exclude: /(node_modules|socket)/ },
       { test: /\.jsx?$/,            loaders: jsLoaders, exclude: /(node_modules|deps)/ },
       { test: /\.scss$/,            loader: scssLoaders.join('!') },
+      { test: /\.json$/,            loader: 'json' },
       { test: /\.css$/ ,            loader: cssLoaders.join('!') },
       { test: /\.(png|woff|woff2|eot|ttf|svg)($|\?)/, loader: 'url' }
     ]

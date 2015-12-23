@@ -1,43 +1,50 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// Assuming Mapbox/Leaflet is already exposed as `L`
+import MapMarker from './MapMarker'
+import _ from 'lodash'
 
-var MapboxMap = React.createClass({
-  componentDidMount: function(argument) {
-    var props = this.props;
+const MapboxMap = React.createClass({
 
-    var mapId = props.mapId || props.src || "mapbox.streets";
-
-    var options = {};
-    var ownProps = ['mapId', 'onMapCreated'];
-    for (var k in props) {
-      if (props.hasOwnProperty(k) && ownProps.indexOf(k) === -1) {
-        options[k] = props[k];
-      }
-    }
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZ29zc2V0IiwiYSI6ImZLdTcyTVkifQ.LGHJx-UvaAnNHuMUwDUXGw'
-    const map = new mapboxgl.Map({
-      container: ReactDOM.findDOMNode(this),
-      style: 'mapbox://styles/mapbox/streets-v8', //stylesheet location
-      center: [-74.50, 40], // starting position
-      zoom: 9 // starting zoom
-    })
-
-    console.log(map)
-
-    if (this.props.onMapCreated) {
-      this.props.onMapCreated(map, L);
+  getInitialState() {
+    return this.state = {
+      map: {}
     }
   },
 
-  render: function() {
+  componentWillReceiveProps(nextProps){
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZ29zc2V0IiwiYSI6ImZLdTcyTVkifQ.LGHJx-UvaAnNHuMUwDUXGw'
+    let map = new mapboxgl.Map({
+      container: ReactDOM.findDOMNode(this),
+      style: 'mapbox://styles/mapbox/dark-v8',
+      center: [0, 0],
+      zoom: 1
+    })
+    const mapLoaded = new Promise((resolve) => {
+      return map.on('load', resolve)
+    })
+    return mapLoaded.then(() => {
+      console.log('map loaded')
+      this.setState({ map: map })
+    })
+  },
+
+  render() {
+    let errors = this.props.errors
+    let photos = this.props.photos
+    let map = this.state.map
     return (
       <div className='map'>
-
+        {errors.length > 0 && errors.map((error, index) => (
+          <pre key={index}>Error: {error}</pre>
+        ))}
+        {errors.length === 0 && !_.isEmpty(map) && photos.map(photo => (
+          // console.log(photo)
+          <MapMarker key={photo.id} photo={photo} map={map} />
+        ))}
       </div>
-    );
+    )
   }
-});
 
-module.exports = MapboxMap;
+})
+
+module.exports = MapboxMap

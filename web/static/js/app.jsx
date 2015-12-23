@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Session as RethinkSession} from 'react-rethinkdb'
-import {Home} from './Home.jsx'
+import {Home} from './Home'
 
 const rethinkSession = new RethinkSession()
 rethinkSession.connect({
