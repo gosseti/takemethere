@@ -21,7 +21,6 @@ export const Home = React.createClass({
     // set up variables for both the photos and errors
     const errors = this.data.photos.errors()
     const photos = this.data.photos.value()
-    console.log(JSON.stringify(photos))
     return (
       <div className='container'>
         {/* send the photos as props to the map component and render it
